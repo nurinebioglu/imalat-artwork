@@ -38,22 +38,6 @@ UPDATE_FILE_URL = "https://github.com/nurinebioglu/imalat-artwork/raw/main/Missy
 predefined_password = "nurinebioglu"
 
 
-def is_admin():
-    try:
-        return ctypes.windll.shell32.IsUserAnAdmin()
-    except:
-        return False
-
-def run_as_admin():
-    if not is_admin():
-        onay = messagebox.askyesno("Yönetici İzni", "Uygulamayı yönetici olarak çalıştırmak istiyor musunuz?")
-        if onay:
-            # Uygulamayı yönetici olarak yeniden başlat
-            ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, __file__, None, 1)
-            sys.exit()
-    else:
-        create_firewall_rule()
-
 def create_firewall_rule():
     uygulama_dizini = os.getcwd()
     subprocess.run(["netsh", "advfirewall", "firewall", "add", "rule", "name=MyApp", "dir=in", "action=allow", f"program={uygulama_dizini}\\{__file__}", "enable=yes"])
@@ -61,8 +45,6 @@ def create_firewall_rule():
 
 create_firewall_rule()
 
-# Uygulamayı yönetici olarak çalıştır ve güvenlik istisnalarını oluştur
-run_as_admin()
 
 
 # .txt dosyasının URL'si
@@ -80,8 +62,9 @@ file_content = response.text.strip()
 
 
 def resource_path(relative_path):
+    """Derlenmiş uygulamada veya normal çalışma modunda mevcut dizini döndürür."""
     try:
-        base_path = sys._MEIPASS
+        base_path = sys._MEIPASS  # PyInstaller tarafından oluşturulan derlenmiş uygulamanın dizini
     except Exception:
         base_path = os.path.abspath(".")
 
@@ -602,8 +585,8 @@ def Excel_Save():
         return
 
     # Excel dosyasını kontrol et ve varsa yükle, yoksa yeni dosya oluştur
-    if os.path.exists("İmalatArtwork.xlsx"):
-        file = load_workbook("İmalatArtwork.xlsx")
+    if os.path.exists("Data\\İmalatArtwork.xlsx"):
+        file = load_workbook("Data\\İmalatArtwork.xlsx")
     else:
         file = Workbook()
 
@@ -644,7 +627,7 @@ def Excel_Save():
     for cell in sheet[empty_row_index]:
         cell.alignment = Alignment(wrapText=True)
 
-    file.save("İmalatArtwork.xlsx")
+    file.save("Data\\İmalatArtwork.xlsx")
 
     # Resmi kaydetme
     img = Image.open(image_path)
@@ -655,7 +638,7 @@ def Excel_Save():
     temp_img.save("temp_image.jpg")
 
     save_filename = (str(D1) + " " + str(A1)).replace("\n", "") + ".jpg"
-    save_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "Artwork", save_filename)
+    save_path = os.path.join("images", "Artwork", save_filename)
 
     # Resmin boyutunu kontrol et ve belirli boyut sınırına ulaşana kadar kaliteyi azalt
     max_file_size = 1024 * 1024  # 1 MB boyut sınırı (byte cinsinden)
@@ -706,8 +689,8 @@ def Search():
         return
 
     # Excel dosyasını aç
-    if os.path.exists("İmalatArtwork.xlsx"):
-        file = load_workbook("İmalatArtwork.xlsx")
+    if os.path.exists("Data\\İmalatArtwork.xlsx"):
+        file = load_workbook("Data\\İmalatArtwork.xlsx")
         sheet = file.active
 
         # Excel dosyasında arama yap
@@ -732,7 +715,7 @@ def Search():
 
                 # Resmi otomatik olarak çağır
                 save_filename = (str(row[3].value) + " " + str(row[2].value)).replace("\n", "") + ".jpg"
-                save_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "Artwork", save_filename)
+                save_path = os.path.join("images", "Artwork", save_filename)
 
                 if os.path.exists(save_path):
                     try:
@@ -805,7 +788,7 @@ def overwrite():
         return
 
     # Varolan Excel dosyasını yükleyin
-    file = load_workbook("İmalatArtwork.xlsx")
+    file = load_workbook("Data\\İmalatArtwork.xlsx")
     sheet = file.active
 
     # Belirli bir şartı sağlayan satırı bulma
@@ -824,7 +807,7 @@ def overwrite():
             break  # İlk eşleşmeyi bulduktan sonra döngüden çık
 
     # Değişiklikleri kaydedin ve Excel dosyasını kapatın
-    file.save("İmalatArtwork.xlsx")
+    file.save("Data\\İmalatArtwork.xlsx")
     # Resmi kaydetme
     img = Image.open(image_path)
 
@@ -834,7 +817,7 @@ def overwrite():
     temp_img.save("temp_image.jpg")
 
     save_filename = (str(D1) + " " + str(A1)).replace("\n", "") + ".jpg"
-    save_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "Artwork", save_filename)
+    save_path = os.path.join("images", "Artwork", save_filename)
 
     # Resmin boyutunu kontrol et ve belirli boyut sınırına ulaşana kadar kaliteyi azalt
     max_file_size = 1024 * 1024  # 1 MB boyut sınırı (byte cinsinden)
@@ -931,7 +914,7 @@ screen_height = root.winfo_screenheight()
 x = (screen_width - window_width) // 2
 y = (screen_height - window_height) // 2
 root.geometry("+{}+{}".format(x, y))
-file=pathlib.Path("İmalatArtwork.xlsx")
+file=pathlib.Path("Data\\İmalatArtwork.xlsx")
 if file.exists():
     pass
 else:
@@ -949,7 +932,7 @@ else:
     sheet["J1"] = "Baskı"
     sheet["K1"] = "Not"
 
-    file.save("İmalatArtwork.xlsx")
+    file.save("Data\\İmalatArtwork.xlsx")
 
 
 
