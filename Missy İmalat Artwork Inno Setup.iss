@@ -19,7 +19,7 @@ DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 OutputDir=C:\Users\ogulc\OneDrive\Masaüstü
-OutputBaseFilename=Missy Ýmalat Artwork
+OutputBaseFilename=Missy Ýmalat Artwork Setup
 SetupIconFile=C:\Users\ogulc\PycharmProjects\ÝmalatArtwork\missy_2.ico
 Compression=lzma
 SolidCompression=yes
