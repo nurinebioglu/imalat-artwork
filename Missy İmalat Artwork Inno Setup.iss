@@ -34,7 +34,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "C:\Users\ogulc\PycharmProjects\ÝmalatArtwork\dist\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\ogulc\PycharmProjects\ÝmalatArtwork\dist\Data\*"; DestDir: "{app}/Data"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\ogulc\PycharmProjects\ÝmalatArtwork\dist\images\*"; DestDir: "{app}/Artwork"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\ogulc\PycharmProjects\ÝmalatArtwork\dist\images\*"; DestDir: "{app}/images"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Users\ogulc\PycharmProjects\ÝmalatArtwork\missy.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\ogulc\PycharmProjects\ÝmalatArtwork\missy.png"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\ogulc\PycharmProjects\ÝmalatArtwork\missy_2.ico"; DestDir: "{app}"; Flags: ignoreversion
