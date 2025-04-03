@@ -1,2 +1,3 @@
 Gucel = 265726 = açık
 Test = 265726 = kapalı
+Uniteks = 265726 = açık
